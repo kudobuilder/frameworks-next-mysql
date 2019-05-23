@@ -1,0 +1,5 @@
+defaultBackupFile: backup.sql
+memory: 512Mi
+cpu: 1
+persistence:
+  size: 8Gi

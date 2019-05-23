@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+name: {{ .Instance.Name }}-pv
+spec:
+  resources:
+    requests:
+      storage: {{ .Params.size }}

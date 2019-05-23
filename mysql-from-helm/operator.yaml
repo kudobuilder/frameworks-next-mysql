@@ -1,0 +1,17 @@
+extends:
+  helm: 
+    name: stable/mysql
+    values:
+      resources:
+        requests:
+          memory: {{ .Params.memory }}
+          cpu: {{ .Params.cpu }}
+      persistence:
+        size: {{ .Params.persistence.size }}
+{{- if .Params.persistence.storageClass }}
+{{- if (eq "-" .Values.persistence.storageClass) }}
+        storageClass: "-"
+{{- else }}
+        storageClass: {{ .Params.persistence.storageClass | quote }}
+{{- end}}
+{{- end }}

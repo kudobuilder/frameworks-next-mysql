@@ -1,0 +1,26 @@
+tasks:
+  deploy:
+    patches:
+      - pvc.yaml
+extends:
+  operator: mysql
+  version: "5.7"
+# extends:
+  # helm: stable/mysql
+  # cnab: 
+
+# events:
+#   backup-24h:
+#     cron: "* * * * *"
+#     task: backup
+#   kubernetes:
+#     name: "Pod"
+#     event: "Created"
+#   exec:
+#     on: mysql-deployment
+#     command: ""
+#     result: ""
+
+
+# ---
+# name: mysql-charles-schwab

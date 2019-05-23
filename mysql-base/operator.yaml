@@ -1,0 +1,66 @@
+version: 5.7
+tasks:
+  deploy:
+    resources:
+    - deployment.yaml
+    - pvc.yaml
+    - service.yaml
+  init:
+  - init.yaml
+  pv:
+  - backup-pv.yaml
+  backup:
+  - backup.yaml
+  restore:
+  - restore.yaml
+  load-data:
+  - job.yaml
+  clear-data:
+  - job.yaml
+  query:
+  - job.yaml
+plans:
+  deploy:
+    phases:
+      - name: deploy
+        strategy: serial
+        steps:
+          - name: deploy
+            tasks:
+            - deploy
+          - name: init
+            tasks:
+            - init
+          - name: cleanup
+            tasks:
+            - init
+            delete: true
+  backup:
+    triggers:
+      - parameter: backupFile
+    phases:
+      - name: backup
+        strategy: serial
+        steps:
+          - name: pv
+            tasks:
+            - pv
+          - name: backup
+            tasks:
+            - backup
+          - name: cleanup
+            tasks:
+            - backup
+            delete: true
+  restore:
+    phases:
+      - name: restore
+        strategy: serial
+        steps:
+          - name: restore
+            tasks:
+            - restore
+          - name: cleanup
+            tasks:
+            - restore
+            delete: true
